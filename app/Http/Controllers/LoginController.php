@@ -7,36 +7,46 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use App\Models\Admin;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
     public function home(Request $request)
     {
-        // if (auth()->check()) {
-        //     return view('home');
-        // } else {
+
+        if (Session::has('token-admin') || Session::has('token-superadmin')) 
+        {
+            return view('home');
+        } else {
             return view('login');
-        // }
+        }
     }
 
-    public function adminLogin(Request $request)
+    public function login(LoginRequest $request)
     {
-        // Session::forget('token');
-        dd(1);
-        // $user = $request->only('email', 'password');
-        // if ($request->email == env('SUPER_ADMIN_EMAIL') && $request == env('SUPER_ADMIN_PASSSWORD')) {
-        //     $token = hash('sha256', Str::random(40));
-        //     Session::put('token', $token);
-        //     dd($token);
-        //     return view('home');
-        // } elseif (auth()->attempt($user)) {
-        //     return view('home');
-        // } 
+        $user = $request->only('email', 'password');
+        $token = hash('sha256', Str::random(40));
+        if ($request->email == env('SUPER_ADMIN_EMAIL') && $request->password == env('SUPER_ADMIN_PASSWORD')) {
+            Session::put('token-superadmin', $token);
+            return redirect('/home');
+        } elseif (auth()->attempt($user)) {
+            dd(1);
+            Session::put('token-admin', $token);
+            return view('home');
+        } else {
+            return redirect('/')->with('error','Sai pass email');
+        }
     }
 
     public function logout() 
     {
-        Session::forget('token');
+        if (Session::has('token-admin')) {
+            Session::forget('token-admin');
+        }
+        if (Session::has('token-superadmin')) {
+            Session::forget('token-superadmin');
+        }
+        return redirect('/');
     }
 }

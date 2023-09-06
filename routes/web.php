@@ -15,7 +15,8 @@ use App\Http\Controllers\LoginController;
 */
 //Auth
 Route::get('/', 'App\Http\Controllers\LoginController@home');
-Route::post('/admin', 'App\Http\Controllers\LoginController@adminLogin')->name('admin.post');
-Route::get('/logout', 'App\Http\Controllers\LoginController@logout');
+Route::get('/home', 'App\Http\Controllers\LoginController@home');
+Route::post('/login', 'App\Http\Controllers\LoginController@login')->name('login.post');
+Route::get('/logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
 Route::get('/register', 'App\Http\Controllers\RegisterController@show');
 Route::post('/registerCheck', 'App\Http\Controllers\RegisterController@register')->name('register.post');

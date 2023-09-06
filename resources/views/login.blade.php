@@ -10,15 +10,26 @@
     width: 25%;
     height: 25%;
     ">
-    <form>
-        <div class="form-group" method="POST" action="{{ route('admin.post') ">
+    <form method="POST" action="{{ route('login.post') }}">
+        <div class="form-group">
             @csrf
+            @if(session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+            @endif
             <label for="exampleInputEmail1">Email</label>
             <input class="form-control" name="email">
+            @error('email')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input class="form-control" name="password">
+            @error('password')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
