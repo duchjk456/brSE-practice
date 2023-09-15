@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Group;
 
 class Admin extends Model
 {
@@ -24,7 +25,7 @@ class Admin extends Model
         'name',
         'email',
         'password',
-        'role',
+        'status',
         'group_id',
     ];
 
@@ -37,4 +38,9 @@ class Admin extends Model
         'password',
         'remember_token',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
 }

@@ -9,14 +9,14 @@
 <main>
     <div class="site-section">
         <div class="container" style="width:80%; margin: left 10%;">
-            <h2>本部ユーザー一覧</h2>
+            <h2>加盟店ユーザー一覧</h2>
             @if(session()->has('success'))
             <div class="alert alert-success">
                 {{ session()->get('success') }}
             </div>
             @endif
             <div>
-                <button class="btn btn-primary"><a href="/admin-creat" style="color: white;">ユーザー新規作成</a></button>
+                <button class="btn btn-primary"><a href="/owner-creat" style="color: white;">ユーザー新規作成</a></button>
                 <br>
                 <br>
             </div>
@@ -25,7 +25,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>グループ</th>
+                            <th>加盟店名</th>
                             <th>メールアドレス</th>
                             <th>名前</th>
                             <th></th>
@@ -33,17 +33,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($admins as $admin)
+                        @foreach ($owners as $owner)
                         <tr>
-                            <td>{{ $admin->id }}</td>
-                            <td>{{ $admin->group->name }}</td>
-                            <td>{{ $admin->email}}</td>
-                            <td>{{ $admin->name}}</td>
+                            <td>{{ $owner->id }}</td>
+                            <td>{{ $owner->store->name }}</td>
+                            <td>{{ $owner->email}}</td>
+                            <td>{{ $owner->name}}</td>
                             <td><button class="btn btn-primary"><a
-                                        href="{{ route('edit.admin', ['id' => $admin->id]) }}"
+                                        href="{{ route('edit.owner', ['id' => $owner->id]) }}"
                                         style="color:white">編集</a></button></td>
                             <td>
-                                @if ($admin->status == 0)
+                                @if ($owner->status == 0)
                                 <button class="btn btn-danger" data-toggle="modal" data-target="#modalConfirmUnblock">
                                     <a href="#" style="color:white">有効</a>
                                 </button>
@@ -61,20 +61,20 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body" style="text-align: center;">
-                                                本部ユーザーを有効にしますか？ {{ $admin->id }}
+                                                加盟店ユーザーを有効にしますか？
                                             </div>
                                             <div class="modal-footer" style="text-align: center;display:flow">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">いいえ</button>
                                                 <button type="button" class="btn btn-primary">
-                                                    <a href="{{ route('unblock.admin', ['id' => $admin->id]) }}"
+                                                    <a href="{{ route('unblock.owner', ['id' => $owner->id]) }}"
                                                         style="color: white;">はい</a>
                                                 </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @elseif ($admin->status == 1)
+                                @elseif ($owner->status == 1)
                                 <button class="btn btn-danger" data-toggle="modal" data-target="#modalConfirmBlock">
                                     <a href="#" style="color:white">無効</a>
                                 </button>
@@ -92,13 +92,13 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body" style="text-align: center;">
-                                                本部ユーザーを無効にしますか？ {{ $admin->id }}
+                                                加盟店ユーザーを無効にしますか？
                                             </div>
                                             <div class="modal-footer" style="text-align: center;display:flow">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">いいえ</button>
                                                 <button type="button" class="btn btn-primary">
-                                                    <a href="{{ route('block.admin', ['id' => $admin->id]) }}"
+                                                    <a href="{{ route('block.owner', ['id' => $owner->id]) }}"
                                                         style="color: white;">はい</a>
                                                 </button>
                                             </div>

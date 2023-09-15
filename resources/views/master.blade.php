@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('template/06/css/bootstrap.min.css') }}">
 
     <link rel="stylesheet" type="text/css" href="{{ asset('template/06/css/style.css') }}">
+    @yield('css')
 
     <title>Document</title>
 </head>
@@ -36,6 +37,7 @@
     <script src="{{ asset('template/06/js/popper.min.js') }}"></script>
     <script src="{{ asset('template/06/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('template/06/js/main.js') }}"></script>
+    @yield('js')
 </body>
 
 </html>
